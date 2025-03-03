@@ -1,0 +1,27 @@
+DDR (Data Direction Register) :
+C'est le registre qui permet de configurer une pin comme entrée ou sortie.
+
+Si un bit de ce registre est à 1, la pin est configurée en sortie.
+Si un bit de ce registre est à 0, la pin est configurée en entrée.
+PORT (Data Register) :
+C'est le registre utilisé pour envoyer des valeurs de sortie vers les pins.
+
+Quand une pin est configurée en sortie (par DDR), on peut lui attribuer une valeur haute ou basse en utilisant PORT.
+Si un bit de PORT est à 1, la pin sera HIGH (état haut), sinon elle sera LOW (état bas).
+PIN (Input Pins Register) :
+C'est le registre utilisé pour lire l'état des pins configurées en entrée.
+
+Lorsque la pin est en entrée, tu peux lire l'état logique de la pin à l'aide de PIN.
+Si le bit correspondant dans PIN est à 1, la pin est dans un état haut (HIGH). Si le bit est à 0, la pin est dans un état bas (LOW).
+Bit Shifting :
+Lorsque tu fais un bit-shifting pour assigner une valeur à un registre, le processeur utilise cette information pour configurer l'état des pins.
+
+Le décalage de bits permet de modifier un seul bit spécifique d'un registre sans affecter les autres bits.
+Par exemple, si tu fais un shift pour configurer un bit à 1, tu vas envoyer cette valeur au processeur pour définir si la pin doit être en entrée ou en sortie, et ainsi de suite.
+Exemple dans ton code :
+Dans ton code, les registres DDR, PORT et PIN sont utilisés pour modifier l'état des pins :
+
+DDRB |= (1 << LED_PIN) : Cela configure PB0 (pin LED) en sortie.
+PORTB |= (1 << LED_PIN) : Cela envoie une valeur HIGH à la pin, allumant ainsi la LED.
+PINx (par exemple PIND) permet de lire l'état des pins en entrée. Si tu veux vérifier l'état d'un bouton connecté à PD2, tu peux lire le bit correspondant avec PIND.
+En gros, tu changes les états des pins en utilisant DDR pour définir leur mode (entrée ou sortie), puis tu contrôles leur état avec PORT pour les sorties, ou tu les lis avec PIN pour les entrées.
