@@ -7,6 +7,7 @@
 
 int main(void) {
     // Set PB0 as output (LED)
+	// used the back of the microcontroller to se which pin is connected to led and so on.
     DDRB |= (1 << LED_PIN); // configure la pin en output pour la led PB0 -> D1
 
     // Set PD2 as input (Button) and enable internal pull-up

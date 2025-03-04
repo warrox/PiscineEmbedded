@@ -20,7 +20,7 @@ int main(void) {
         } else {
             PORTB &= ~(1 << LED_PIN); // Turn LED off
         }
-        _delay_ms(50); // Simple debounce
+        _delay_ms(50); // debounce
     }
 
     return 0;
