@@ -100,7 +100,6 @@ int main(void) {
     // Initialiser le Timer1
     init_timer1();
 
-    // Définir `step` après `init_timer1()` pour qu'ICR1 soit bien défini
     uint16_t step = ICR1 / 10;
     uint16_t min_value = ICR1 / 10;  // 10% de ICR1
     uint16_t max_value = ICR1;  // 100% de ICR1
@@ -114,7 +113,7 @@ int main(void) {
 
         // Incrémentation par 10% (bouton gauche)
         if (button_l && !prev_button_l) {
-            _delay_ms(50);  // Anti-rebond
+            _delay_ms(50);
             if (OCR1A + step <= max_value) {
                 OCR1A += step;
             } else {
@@ -125,7 +124,7 @@ int main(void) {
 
         // Décrémentation par 10% (bouton droit)
         if (button_r && !prev_button_r) {
-            _delay_ms(50);  // Anti-rebond
+            _delay_ms(50);
             if (OCR1A > min_value) {
                 OCR1A -= step;
             } else {
