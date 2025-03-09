@@ -1,4 +1,4 @@
-
+#include <util/delay.h>
 #include <avr/io.h>
 #define RGB_LED_RED PD5
 #define RGB_LED_BLUE PD3
@@ -6,12 +6,22 @@
 int main(void){
 	
 	DDRD |= (1 << RGB_LED_RED);
-	PORTD |= (1 << RGB_LED_RED);
 	DDRD |= (1 << RGB_LED_BLUE);
-	PORTD |= (1 << RGB_LED_BLUE);
 	DDRD |= (1 << RGB_LED_GREEN);
-	PORTD |= (1 << RGB_LED_GREEN);
-	while(1);
+	while(1){
+		PORTD |= (1 << RGB_LED_RED);
+		_delay_ms(1000);
+		PORTD &= ~(1 << RGB_LED_RED);
+		_delay_ms(50);
+		PORTD |= (1 << RGB_LED_GREEN);
+		_delay_ms(1000);
+		PORTD &= ~(1 << RGB_LED_GREEN);
+		_delay_ms(50);
+		PORTD |= (1 << RGB_LED_BLUE);
+		_delay_ms(1000);
+		PORTD &= ~(1 << RGB_LED_BLUE);
+		_delay_ms(50);
+	}
 }
 /*• T1/OC0B/PCINT21 – Port D, Bit 5
 T1, Timer/Counter1 counter source.
