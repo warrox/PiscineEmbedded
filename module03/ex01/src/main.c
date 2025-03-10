@@ -20,17 +20,17 @@ int main(void){
 		PORTD |= (1 << RGB_LED_BLUE);
 		_delay_ms(1000);
 		PORTD &= ~(1 << RGB_LED_BLUE);
-		_delay_ms(1000);
+		_delay_ms(50);
 		//Yellow
 		PORTD |= (1 << RGB_LED_RED);
 		PORTD |= (1 << RGB_LED_GREEN);
-		_delay_ms(10000);
+		_delay_ms(1000);
 		PORTD &= ~(1 << RGB_LED_RED);
 		_delay_ms(50);
 		//CYAN
 		PORTD |= (1 << RGB_LED_BLUE);
 		_delay_ms(1000);
-		PORTD &= ~(1 << RGB_LED_GREEN)
+		PORTD &= ~(1 << RGB_LED_GREEN);
 		_delay_ms(50);
 		//MAGENTA
 		PORTD |= (1 << RGB_LED_RED);
