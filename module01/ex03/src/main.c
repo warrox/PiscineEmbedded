@@ -14,14 +14,14 @@ void init_timer1() {
     // Configurer la sortie PWM non inversée sur OC1A (LED_PIN)
     TCCR1A |= (1 << COM1A1); 
 
-    // Définir le prescaler à 1024
-    TCCR1B |= (1 << CS12) | (1 << CS10);
+    // Définir le prescaler à 256
+    TCCR1B |= (1 << CS12) ;
 
     // Définir la période du signal (TOP)
-    ICR1 = (F_CPU / 1024) - 1; // Période de la PWM (1s si F_CPU = 1MHz)
+    ICR1 = 62499; // Période de la PWM (1s si F_CPU = 1MHz)
 
     // Définir le rapport cyclique à 10% (10% de ICR1)
-    OCR1A = ICR1 / 10;
+    OCR1A = 6249;
 }
 
 int main(void) {
@@ -35,12 +35,12 @@ int main(void) {
     // Initialiser le Timer1
     init_timer1();
 	unsigned int counter = 0;
-    uint16_t step = ICR1 / 10;
+    uint16_t step = 6249;
     uint16_t min_value = ICR1 / 10;  // 10% de ICR1
     uint16_t max_value = ICR1;  // 100% de ICR1
 
-    uint8_t prev_button_l = 0;
-    uint8_t prev_button_r = 0;
+    uint8_t prev_button_l = !(PIND & (1 << BUTTON_L));
+    uint8_t prev_button_r = !(PIND & (1 << BUTTON_R));
 
     while (1) {
         uint8_t button_l = !(PIND & (1 << BUTTON_L));
@@ -60,7 +60,7 @@ int main(void) {
         prev_button_l = button_l;
 
         // Décrémentation par 10% (bouton droit)
-        if (button_r && !prev_button_r) {
+        if (button_r) {
             _delay_ms(100);
             if (OCR1A > min_value && counter > 0) {
                 OCR1A -= step;
@@ -72,3 +72,4 @@ int main(void) {
         prev_button_r = button_r;
     }
 }
+
