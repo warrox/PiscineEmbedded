@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdlib.h>
-
+#include <stdbool.h>
 #define RGB_LED_RED PD5
 #define RGB_LED_BLUE PD3
 #define RGB_LED_GREEN PD6
@@ -103,31 +103,35 @@ int main()
     char c;
     int i = 1;
     buffer[0] = '#';
-
+	bool trigger;
     uart_init(ubbr);
     uart_printstr("Please enter a Hex color to display (format: #RRGGBB)\n");
     
     while (1)
     {
         c = uart_rx();
-		uart_tx(buffer[0]);
+		if(!trigger)
+			uart_tx(buffer[0]);
         uart_tx(c);
         
         if (i < 7 && ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
         {
             buffer[i++] = c;
+			trigger = true;
         }
         else if (i == 7)
         {
 			init_rgb();
             buffer[i] = '\0';
             process_color();
+			trigger = false;
             i = 1;
         }
         else
         {
             uart_printstr("Invalid input, try again\n");
             i = 1;
+			trigger = false;
         }
     }
 }
